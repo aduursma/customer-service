@@ -1,0 +1,4 @@
+= Customer Service
+
+== Introduction
+The *Customer Service* is part of the _Microservices Playground_ project.
