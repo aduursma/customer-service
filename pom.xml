@@ -12,7 +12,7 @@
 	<artifactId>customer-service</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 
-	<name>customer-service</name>
+	<name>Customer Service</name>
 	<description>Microservices Playground - Customer Service</description>
 
 	<properties>
