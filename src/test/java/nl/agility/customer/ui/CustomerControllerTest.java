@@ -2,8 +2,8 @@ package nl.agility.customer.ui;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.agility.commons.web.config.SecurityAutoConfiguration;
-import nl.agility.customer.domain.Customer;
 import nl.agility.customer.service.CustomerService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
@@ -11,10 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
+import static nl.agility.customer.CustomerTestUtils.getCustomers;
 import static nl.agility.customer.ui.BaseController.CUSTOMER_V1;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -43,10 +40,13 @@ class CustomerControllerTest {
     @MockBean
     private CustomerService customerService;
 
+    @BeforeEach
+    void setUp() {
+        when(customerService.retrieveCustomers()).thenReturn(getCustomers());
+    }
+
     @Test
     void retrieveCustomersWithV1AcceptHeaderProducesValidResponse() throws Exception {
-        when(customerService.retrieveCustomers()).thenReturn(getCustomers());
-
         mockMvc
             .perform(get(CUSTOMERS_URI)
             .accept(CUSTOMER_V1))
@@ -59,8 +59,6 @@ class CustomerControllerTest {
 
     @Test
     void retrieveCustomersWithoutAnAcceptHeaderProducesValidV1Response() throws Exception {
-        when(customerService.retrieveCustomers()).thenReturn(getCustomers());
-
         mockMvc
             .perform(get(CUSTOMERS_URI))
             .andExpect(status().isOk())
@@ -73,8 +71,6 @@ class CustomerControllerTest {
 
     @Test
     void retrieveCustomersWithInvalidAcceptHeaderProducesErrorResponse() throws Exception {
-        when(customerService.retrieveCustomers()).thenReturn(getCustomers());
-
         mockMvc
             .perform(get(CUSTOMERS_URI)
             .accept(CUSTOMER_INVALID_VERSION))
@@ -82,19 +78,6 @@ class CustomerControllerTest {
             .andExpect(content().string(is(emptyString())));
 
         verify(customerService, times(0)).retrieveCustomers();
-    }
-
-    List<Customer> getCustomers() {
-        Customer customer = new Customer();
-        customer.setId(1L);
-        customer.setVersion(null);
-        customer.setCreated(LocalDate.now());
-        customer.setLastUpdated(null);
-        customer.setName("Pino Lino");
-
-        List<Customer> customers = new ArrayList<>();
-
-        return List.of(customer);
     }
 
 }
