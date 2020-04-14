@@ -2,6 +2,8 @@ package nl.agility.customer.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,10 +31,12 @@ public class Customer {
     private int version;
 
     @JsonIgnore
+    @CreatedDate
     @Column(name = "CREATED")
     private LocalDateTime created;
 
     @JsonIgnore
+    @LastModifiedDate
     @Column(name = "LAST_UPDATED")
     private LocalDateTime lastUpdated;
 
