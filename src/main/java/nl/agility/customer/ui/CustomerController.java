@@ -6,6 +6,7 @@ import nl.agility.customer.service.CustomerService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -15,7 +16,7 @@ public class CustomerController extends BaseController {
     private final CustomerService customerService;
 
     @GetMapping("/customers")
-    public List<Customer> retrieveCustomers() {
+    public List<@Valid Customer> retrieveCustomers() {
         return this.customerService.retrieveCustomers();
     }
 

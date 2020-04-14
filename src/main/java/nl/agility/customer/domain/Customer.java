@@ -3,11 +3,14 @@ package nl.agility.customer.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.time.LocalDate;
+import javax.persistence.Version;
+import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 import static javax.persistence.GenerationType.AUTO;
 
@@ -18,17 +21,22 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = AUTO)
-    @JsonIgnore
+    @Column(name = "ID")
     private Long id;
 
-    @JsonIgnore
-    private String version;
+    @Version
+    @Column(name = "VERSION")
+    private int version;
 
     @JsonIgnore
-    private LocalDate created;
+    @Column(name = "CREATED")
+    private LocalDateTime created;
 
     @JsonIgnore
-    private LocalDate lastUpdated;
+    @Column(name = "LAST_UPDATED")
+    private LocalDateTime lastUpdated;
 
+    @NotBlank
+    @Column(name = "NAME")
     private String name;
 }

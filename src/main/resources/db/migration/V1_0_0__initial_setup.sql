@@ -1,17 +1,17 @@
 CREATE TABLE IF NOT EXISTS customers (
 
-    id SERIAL PRIMARY KEY,
-    version INT NOT NULL DEFAULT 0,
-    created TIMESTAMP,
-    last_updated TIMESTAMP,
-    name VARCHAR(20)
+    ID SERIAL PRIMARY KEY,
+    VERSION INT NOT NULL DEFAULT 0,
+    CREATED TIMESTAMP,
+    LAST_UPDATED TIMESTAMP,
+    NAME VARCHAR(20) NOT NULL
 
 );
 
 INSERT INTO customers (name) VALUES
-    ('Andre Duursma'),
-    ('Jeroen Burggraaf'),
-    ('Cees Sinke'),
-    ('Ryan Fester'),
-    ('David Pardo')
+    ('Robert C. Martin'),
+    ('Martin Fowler'),
+    ('Grady Booch'),
+    ('Kent Beck'),
+    ('Erich Gamma')
 ;

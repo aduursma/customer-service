@@ -2,6 +2,7 @@ package nl.agility.customer.ui;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.agility.commons.web.config.SecurityAutoConfiguration;
+import nl.agility.customer.domain.Customer;
 import nl.agility.customer.service.CustomerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,8 @@ import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
 
 import static nl.agility.customer.CustomerTestUtils.getCustomers;
 import static nl.agility.customer.ui.BaseController.CUSTOMER_V1;
@@ -52,7 +55,7 @@ class CustomerControllerTest {
             .accept(CUSTOMER_V1))
             .andExpect(status().isOk())
             .andExpect(content().string(is(notNullValue())))
-            .andExpect(jsonPath("$[0].name", is("Pino Lino")));
+            .andExpect(jsonPath("$[0].name", is("Robert C. Martin")));
 
         verify(customerService, times(1)).retrieveCustomers();
     }
@@ -64,7 +67,7 @@ class CustomerControllerTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(CUSTOMER_V1))
             .andExpect(content().string(is(notNullValue())))
-            .andExpect(jsonPath("$[0].name", is("Pino Lino")));
+            .andExpect(jsonPath("$[0].name", is("Robert C. Martin")));
 
         verify(customerService, times(1)).retrieveCustomers();
     }
@@ -78,6 +81,23 @@ class CustomerControllerTest {
             .andExpect(content().string(is(emptyString())));
 
         verify(customerService, times(0)).retrieveCustomers();
+    }
+
+    @Test
+    void retrieveInvalidCustomersProducesErrorResponse() throws Exception {
+        List<Customer> customers = getCustomers();
+
+        Customer customer = customers.get(0);
+        customer.setName(null);
+
+        when(customerService.retrieveCustomers()).thenReturn(List.of(customer));
+
+        mockMvc
+            .perform(get(CUSTOMERS_URI)
+            .accept(CUSTOMER_V1))
+            .andExpect(status().isBadRequest());
+
+        verify(customerService, times(1)).retrieveCustomers();
     }
 
 }

@@ -1,9 +1,11 @@
 package nl.agility.customer.ui;
 
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import static nl.agility.customer.ui.BaseController.CUSTOMER_V1;
 
+@Validated
 @RequestMapping(path = "/api", produces = CUSTOMER_V1)
 public abstract class BaseController {
 
