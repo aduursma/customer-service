@@ -33,7 +33,7 @@ class CustomerJsonTest {
 
     @Test
     void serializationWithoutIgnoredPropertiesResultsInJsonWithoutIgnoredProperties() throws Exception {
-        Customer customer = (Customer) CustomerMother.complete()
+        Customer customer = CustomerMother.complete()
             .created(null)
             .lastUpdated(null)
             .build();
