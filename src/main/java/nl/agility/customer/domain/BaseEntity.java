@@ -1,6 +1,7 @@
 package nl.agility.customer.domain;
 
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -11,8 +12,9 @@ import javax.persistence.Version;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Data
+@SuperBuilder
 @MappedSuperclass
-public abstract class BaseEntity {
+public class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -22,4 +24,7 @@ public abstract class BaseEntity {
     @Version
     @Column(name = "VERSION")
     private int version;
+
+    public BaseEntity() {
+    }
 }

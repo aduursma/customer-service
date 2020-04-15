@@ -2,6 +2,7 @@ package nl.agility.customer.ui;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.agility.commons.web.config.SecurityAutoConfiguration;
+import nl.agility.customer.CustomerMother;
 import nl.agility.customer.domain.Customer;
 import nl.agility.customer.service.CustomerService;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static nl.agility.customer.CustomerTestUtils.getCustomers;
 import static nl.agility.customer.ui.BaseController.CUSTOMER_V1;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -31,21 +31,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ImportAutoConfiguration(SecurityAutoConfiguration.class)
 class CustomerControllerTest {
 
-    private static final String CUSTOMERS_URI = "/api/customers";
-    private static final String CUSTOMER_INVALID_VERSION = "application/vnd.customer.api.vX+json";
+    static final String CUSTOMERS_URI = "/api/customers";
+    static final String CUSTOMER_INVALID_VERSION = "application/vnd.customer.api.vX+json";
 
     @Autowired
-    private MockMvc mockMvc;
+    MockMvc mockMvc;
 
     @Autowired
-    private ObjectMapper objectMapper;
+    ObjectMapper objectMapper;
 
     @MockBean
-    private CustomerService customerService;
+    CustomerService customerService;
 
     @BeforeEach
     void setUp() {
-        when(customerService.retrieveCustomers()).thenReturn(getCustomers());
+        when(customerService.retrieveCustomers()).thenReturn(List.of(CustomerMother.complete().build()));
     }
 
     @Test
@@ -85,10 +85,9 @@ class CustomerControllerTest {
 
     @Test
     void retrieveInvalidCustomersProducesErrorResponse() throws Exception {
-        List<Customer> customers = getCustomers();
-
-        Customer customer = customers.get(0);
-        customer.setName(null);
+        Customer customer = CustomerMother.complete()
+            .name(null)
+            .build();
 
         when(customerService.retrieveCustomers()).thenReturn(List.of(customer));
 

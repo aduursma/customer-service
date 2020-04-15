@@ -1,5 +1,6 @@
 package nl.agility.customer.service;
 
+import nl.agility.customer.CustomerMother;
 import nl.agility.customer.domain.Customer;
 import nl.agility.customer.repository.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static nl.agility.customer.CustomerTestUtils.getCustomers;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -22,14 +22,14 @@ import static org.mockito.Mockito.when;
 class CustomerServiceTest {
 
     @Mock
-    private CustomerRepository customerRepository;
+    CustomerRepository customerRepository;
 
     @InjectMocks
-    private CustomerService customerService;
+    CustomerService customerService;
 
     @BeforeEach
     void setUp() {
-        when(customerRepository.findAll()).thenReturn(getCustomers());
+        when(customerRepository.findAll()).thenReturn(List.of(CustomerMother.complete().build()));
     }
 
     @Test

@@ -1,6 +1,6 @@
 package nl.agility.customer.domain;
 
-import nl.agility.customer.CustomerTestUtils;
+import nl.agility.customer.CustomerMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,17 +17,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 class CustomerValidationTest {
 
-    private Validator validator;
+    Validator validator;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }
 
     @Test
     void validatingAValidInstanceThrowsNoExceptions() {
-        Customer customer = CustomerTestUtils.getCustomers().get(0);
+        Customer customer = CustomerMother.complete().build();
 
         Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
 
@@ -37,7 +37,7 @@ class CustomerValidationTest {
 
     @Test
     void validatingAnIValidInstanceThrowsAnException() {
-        Customer customer = CustomerTestUtils.getCustomers().get(0);
+        Customer customer = CustomerMother.complete().build();
         customer.setName(null);
 
         Set<ConstraintViolation<Customer>> violations = validator.validate(customer);

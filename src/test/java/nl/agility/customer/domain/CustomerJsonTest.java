@@ -1,6 +1,6 @@
 package nl.agility.customer.domain;
 
-import nl.agility.customer.CustomerTestUtils;
+import nl.agility.customer.CustomerMother;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
@@ -13,18 +13,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CustomerJsonTest {
 
     @Autowired
-    private JacksonTester<Customer> json;
+    JacksonTester<Customer> json;
 
     @Test
     void serializationWithIgnoredPropertiesResultsInJsonWithoutIgnoredProperties() throws Exception {
-        Customer customer = CustomerTestUtils.getCustomers().get(0);
+        Customer customer = CustomerMother.complete().build();
 
         JsonContent<Customer> result = this.json.write(customer);
 
         assertThat(result).hasJsonPath("$.id");
         assertThat(result).extractingJsonPathNumberValue("$.id").isEqualTo(1);
         assertThat(result).hasJsonPath("$.version");
-        assertThat(result).extractingJsonPathNumberValue("$.version").isEqualTo(1);
+        assertThat(result).extractingJsonPathNumberValue("$.version").isEqualTo(0);
         assertThat(result).doesNotHaveJsonPath("$.created");
         assertThat(result).doesNotHaveJsonPath("$.lastUpdated");
         assertThat(result).hasJsonPath("$.name");
@@ -33,16 +33,17 @@ class CustomerJsonTest {
 
     @Test
     void serializationWithoutIgnoredPropertiesResultsInJsonWithoutIgnoredProperties() throws Exception {
-        Customer customer = CustomerTestUtils.getCustomers().get(0);
-        customer.setCreated(null);
-        customer.setLastUpdated(null);
+        Customer customer = (Customer) CustomerMother.complete()
+            .created(null)
+            .lastUpdated(null)
+            .build();
 
         JsonContent<Customer> result = this.json.write(customer);
 
         assertThat(result).hasJsonPath("$.id");
         assertThat(result).extractingJsonPathNumberValue("$.id").isEqualTo(1);
         assertThat(result).hasJsonPath("$.version");
-        assertThat(result).extractingJsonPathNumberValue("$.version").isEqualTo(1);
+        assertThat(result).extractingJsonPathNumberValue("$.version").isEqualTo(0);
         assertThat(result).doesNotHaveJsonPath("$.created");
         assertThat(result).doesNotHaveJsonPath("$.lastUpdated");
         assertThat(result).hasJsonPath("$.name");

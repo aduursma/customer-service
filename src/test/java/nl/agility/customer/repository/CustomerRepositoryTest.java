@@ -19,7 +19,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 class CustomerRepositoryTest {
 
     @Autowired
-    private CustomerRepository repository;
+    CustomerRepository repository;
 
     @Test
     void findAllShouldRetrieveAllCustomers() {
