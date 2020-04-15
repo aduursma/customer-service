@@ -5,10 +5,10 @@ import nl.agility.customer.domain.Customer;
 
 import java.time.LocalDateTime;
 
-public class CustomerBuilder extends Customer {
+public class CustomerDelegate extends Customer {
 
-    @Builder(builderClassName = "CustomerBuilder")
-    public CustomerBuilder(Long id, int version, LocalDateTime created, LocalDateTime lastUpdated, String name) {
+    @Builder
+    public CustomerDelegate(Long id, int version, LocalDateTime created, LocalDateTime lastUpdated, String name) {
         setId(id);
         setVersion(version);
         setCreated(created);

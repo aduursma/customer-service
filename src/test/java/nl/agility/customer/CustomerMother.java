@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 
 public class CustomerMother {
 
-    public static CustomerBuilder.CustomerBuilder complete() {
-        return CustomerBuilder.builder()
+    public static CustomerDelegate.CustomerDelegateBuilder complete() {
+        return CustomerDelegate.builder()
             .id(1L)
             .version(0)
             .created(LocalDateTime.now())
