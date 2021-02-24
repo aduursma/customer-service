@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>nl.agility.maven</groupId>
 		<artifactId>parent-services-pom</artifactId>
-		<version>1.0.0-6c87a351</version>
+		<version>1.0.0-f537b0be</version>
 	</parent>
 
 	<groupId>nl.agility.services</groupId>
@@ -19,8 +19,10 @@
 	<properties>
 		<revision>SNAPSHOT</revision>
 
-		<flyway-core.version>6.3.1</flyway-core.version>
-		<postgresql.version>42.2.11</postgresql.version>
+		<hibernate-validator.version>6.2.0.Final</hibernate-validator.version>
+
+		<flyway-core.version>7.5.4</flyway-core.version>
+		<postgresql.version>42.2.19</postgresql.version>
 		<h2.version>1.4.200</h2.version>
 	</properties>
 
@@ -47,13 +49,6 @@
 			<artifactId>h2</artifactId>
 			<version>${h2.version}</version>
 			<scope>runtime</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava-testlib</artifactId>
-			<version>29.0-jre</version>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

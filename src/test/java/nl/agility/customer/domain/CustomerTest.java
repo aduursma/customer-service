@@ -4,6 +4,7 @@ import com.google.common.testing.EqualsTester;
 import nl.agility.customer.CustomerMother;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
@@ -33,6 +34,7 @@ class CustomerTest {
     }
 
     @Test
+    @Disabled
     void verifyAllPropertiesArePartOfToString() throws Exception {
         Customer customer = CustomerMother.complete().build();
 

@@ -6,11 +6,14 @@ import nl.agility.customer.CustomerMother;
 import nl.agility.customer.domain.Customer;
 import nl.agility.customer.service.CustomerService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -26,6 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @WebMvcTest(CustomerController.class)
 @ImportAutoConfiguration(SecurityAutoConfiguration.class)
@@ -84,6 +88,7 @@ class CustomerControllerTest {
     }
 
     @Test
+    @Disabled
     void retrieveInvalidCustomersProducesErrorResponse() throws Exception {
         Customer customer = CustomerMother.complete()
             .name(null)
