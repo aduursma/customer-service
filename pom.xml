@@ -23,7 +23,7 @@
 
 		<flyway-core.version>7.5.4</flyway-core.version>
 		<postgresql.version>42.2.19</postgresql.version>
-		<h2.version>1.4.200</h2.version>
+		<h2.version>2.0.206</h2.version>
 	</properties>
 
 	<dependencies>
